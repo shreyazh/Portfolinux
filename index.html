@@ -1,5 +1,4 @@
-<div class="header">
-            <div class="title-banner" style="text-align: left; margin-bottom: 20px;"><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -93,7 +92,7 @@
         
         .input-line {
             display: flex;
-            align-items: left;
+            align-items: center;
             margin-top: 10px;
         }
         
@@ -223,25 +222,29 @@
             personal: {
                 name: "Shreyash Srivastva",
                 location: "Lucknow, Uttar Pradesh",
+                phone: "+918765906865",
                 email: "shreyash5183@gmail.com",
-                linkedin: "https://linkedin.com/in/shreyashsrivastva",
-                github: "https://github.com/shreyazh"
+                linkedin: "https://linkedin.com/in/shreyash-srivastva",
+                github: "https://github.com/shreyashsrivastva"
             },
             education: [
                 {
                     institution: "Dr. A.P.J. Abdul Kalam Technical University, Lucknow",
                     degree: "B.Tech - Computer Science and Engineering",
-                    period: "2022 – 2026"                    
+                    period: "2022 – 2026",
+                    cgpa: "7.77 / 10"
                 },
                 {
                     institution: "RLB Memorial School (CBSE Board)",
                     degree: "Senior Secondary (12th Grade)",
-                    period: "2020 – 2022"                    
+                    period: "2020 – 2022",
+                    percentage: "80%"
                 },
                 {
                     institution: "DAV Public School (CBSE Board)",
                     degree: "Secondary (10th Grade)",
-                    period: "2018 – 2020"                    
+                    period: "2018 – 2020",
+                    percentage: "90%"
                 }
             ],
             experience: [
@@ -253,7 +256,7 @@
                     achievements: [
                         "Built 10+ responsive websites using JavaScript, TypeScript, React, and TailwindCSS",
                         "Boosted online visibility by 45% through SEO strategies and social media branding",
-                        "Successfully completed Technical Analysis and Audits for 4 companies enhancing their productivity and revenue upto an average of 57%"
+                        "Provided digital mentorship to college students via 'Thoda Guide Karde Bhai'"
                     ]
                 },
                 {
@@ -266,18 +269,7 @@
                         "Developed classification models using Python, Scikit-learn, Pandas, NumPy",
                         "Delivered detailed explanation via video and Jupyter Notebook walkthrough"
                     ]
-                },
-                {
-                title: "Counselor at Robin Hood Academy",
-                role: "Volunteer Counselor",
-                period: "March 2024 – Present",
-                location: "Lucknow, Uttar Pradesh",
-                achievements: [
-                    "Provided emotional support and guidance to underprivileged children and families",
-                    "Conducted one-on-one and group sessions focused on self-awareness, confidence, and resilience",
-                    "Applied principles of behavioral psychology to help students manage stress and improve communication"
-                ]
-            }
+                }
             ],
             projects: [
                 {
@@ -293,14 +285,14 @@
                     ]
                 },
                 {
-                    name: "FinCrypt.ai",
-                    description: "Crypto based Financial Advisor",
-                    tech: "Deep Learning, Pyhton",
-                    year: "2025",
+                    name: "YouTube Notes Maker",
+                    description: "Automated Slide Extractor from Videos",
+                    tech: "OpenCV, pytesseract",
+                    year: "2022",
                     features: [
-                        "Personal Crypto Advising Bot",
-                        "Uses Neural-net for projection of Regression based data",
-                        "Backend Based applications"
+                        "GUI-based Python tool for extracting unique slides",
+                        "Uses yt-dlp, SSIM, and OCR for video processing",
+                        "Tkinter interface with threaded processing"
                     ]
                 },
                 {
@@ -319,7 +311,7 @@
             skills: {
                 languages: ["Python", "SQL", "JavaScript", "TypeScript", "Java", "C"],
                 frameworks: ["Django", "React", "Node.js", "Express", "Flask", "TensorFlow"],
-                tools: ["VS Code", "Jupyter", "Google Colab", "PyCharm", "Github", "Figma","Apache"],
+                tools: ["VS Code", "Jupyter", "Google Colab", "PyCharm", "Github", "Figma"],
                 libraries: ["Matplotlib", "NumPy", "Seaborn", "Scikit-learn", "Pandas", "Bootstrap"]
             },
             achievements: [
@@ -329,7 +321,7 @@
                 "Mentor @ GDG Lucknow - Mentored 450+ students in AIML",
                 "UN International Level Essay Competition Winner",
                 "Under-19 State Level Chess Champion",
-                "Solved 500+ Core DSA Problems"
+                "Solved 500+ DSA Problems"
             ],
             certifications: [
                 "Python for Data Science",
@@ -337,8 +329,7 @@
                 "Deep Learning Fundamentals",
                 "Mastering Data Structures and Algorithm",
                 "Linear Regression",
-                "NLP and GenAI",
-                "Full-Stack Development
+                "NLP and GenAI"
             ]
         };
 
@@ -347,7 +338,7 @@
                 return `Available commands:
                 
 <span class="success">Basic Commands:</span>
-  help                - Show this help message
+  help                 - Show this help message
   cls / clear         - Clear the terminal
   whoami              - Display user information
   pwd                 - Print working directory
@@ -411,12 +402,12 @@
                 return `<span class="success">About ${portfolioData.personal.name}</span>
                 
 ${portfolioData.personal.name} is an innovative and research-driven developer with a strong 
-foundation in artificial intelligence, machine learning, ui/ux designer and full-stack development. 
+foundation in artificial intelligence, machine learning, and full-stack development. 
 Recognized across numerous national and international hackathons for building impactful, 
 tech-driven solutions.
 
 <span class="info">Location:</span> ${portfolioData.personal.location}
-<span class="info">Focus Areas:</span> AI/ML, Full-Stack Development, Research, UI/UX
+<span class="info">Focus Areas:</span> AI/ML, Full-Stack Development, Research
 <span class="info">Specialties:</span> Building intelligent, user-friendly applications`;
             },
             
@@ -534,6 +525,7 @@ portfolio/
             
             stat: () => {
                 return `<span class="success">Portfolio Statistics</span>
+
 <span class="info">Coding Since:</span> 2015
 <span class="info">Experience:</span> 4+ years (since Feb 2021)
 <span class="info">Projects:</span> 3 featured projects + 40+ websites
@@ -570,8 +562,8 @@ portfolio/
             matrix: () => {
                 const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
                 let result = '<span style="color: #00ff00; font-family: monospace;">';
-                for (let i = 0; i < 200; i++) {
-                    for (let j = 0; j < 350; j++) {
+                for (let i = 0; i < 10; i++) {
+                    for (let j = 0; j < 50; j++) {
                         result += matrixChars[Math.floor(Math.random() * matrixChars.length)];
                     }
                     result += '\n';
@@ -582,25 +574,12 @@ portfolio/
             
             fortune: () => {
                 const quotes = [
-                    "Talk is cheap. Show me the code. – Linus Torvalds",
                     "Innovation distinguishes between a leader and a follower. - Steve Jobs",
                     "The best way to predict the future is to create it. - Peter Drucker",
                     "Code is like humor. When you have to explain it, it's bad. - Cory House",
                     "First, solve the problem. Then, write the code. - John Johnson",
                     "The only way to do great work is to love what you do. - Steve Jobs",
                     "Machine learning is the last invention humanity will ever need to make. - Nick Bostrom"
-                    "First, solve the problem. Then, write the code. - John Johnson",
-                    "The only way to do great work is to love what you do. - Steve Jobs",
-                    "Machine learning is the last invention humanity will ever need to make. - Nick Bostrom",
-                    "I think it's fair to say that personal computers have become the most empowering tool we've ever created. – Bill Gates",
-                    "The best minds of my generation are thinking about how to make people click ads. – Jeff Hammerbacher",
-                    "The only way to learn a new programming language is by writing programs in it. – Dennis Ritchie",
-                    "You can create art and beauty on a computer. – Steve Jobs",
-                    "Good programmers use their brains, but good guidelines save us having to think out every case. – Francis Glassborow",
-                    "The hackers of today are the wizards of the future. – Eric S. Raymond",
-                    "I am not a great programmer; I am just a good programmer with great habits. – Kent Beck",
-                    "Programs must be written for people to read, and only incidentally for machines to execute. – Harold Abelson",
-                    "A hacker is someone who loves to program and enjoys being clever about it. – Richard Stallman"
                 ];
                 return `<span class="info">${quotes[Math.floor(Math.random() * quotes.length)]}</span>`;
             }
