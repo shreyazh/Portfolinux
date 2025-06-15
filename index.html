@@ -195,9 +195,9 @@
 </pre>
             </div>
             <div style="margin-top: 20px;">
-                Welcome to Portfolinux v2.0 - Shreyash Srivastva's Interactive Terminal Portfolio
+                Welcome to Portfolinux v2.0 - Shreyash Srivastva's Terminal Portfolio
                 <br>Type '<span class="highlight">help</span>' to see available commands
-                <br>Last login: Sun Jun 15 15:30:22 2025 from portfolio.shreyashsrivastva.dev
+                <br>Last Message: The future is uncertain, so create meaning, and live for today.
             </div>
         </div>
         
@@ -222,29 +222,25 @@
             personal: {
                 name: "Shreyash Srivastva",
                 location: "Lucknow, Uttar Pradesh",
-                phone: "+918765906865",
                 email: "shreyash5183@gmail.com",
-                linkedin: "https://linkedin.com/in/shreyash-srivastva",
-                github: "https://github.com/shreyashsrivastva"
+                linkedin: "https://linkedin.com/in/shreyashsrivastva",
+                github: "https://github.com/shreyazh"
             },
             education: [
                 {
                     institution: "Dr. A.P.J. Abdul Kalam Technical University, Lucknow",
                     degree: "B.Tech - Computer Science and Engineering",
-                    period: "2022 – 2026",
-                    cgpa: "7.77 / 10"
+                    period: "2022 – 2026"                    
                 },
                 {
                     institution: "RLB Memorial School (CBSE Board)",
                     degree: "Senior Secondary (12th Grade)",
-                    period: "2020 – 2022",
-                    percentage: "80%"
+                    period: "2020 – 2022"                    
                 },
                 {
                     institution: "DAV Public School (CBSE Board)",
                     degree: "Secondary (10th Grade)",
-                    period: "2018 – 2020",
-                    percentage: "90%"
+                    period: "2018 – 2020"                    
                 }
             ],
             experience: [
@@ -254,9 +250,9 @@
                     period: "Feb 2021 – Present",
                     location: "India · Hybrid",
                     achievements: [
-                        "Built 10+ responsive websites using JavaScript, TypeScript, React, and TailwindCSS",
+                        "Built 14+ responsive websites using JavaScript, TypeScript, React, and TailwindCSS",
                         "Boosted online visibility by 45% through SEO strategies and social media branding",
-                        "Provided digital mentorship to college students via 'Thoda Guide Karde Bhai'"
+                        "Successfully completed Technical Analysis and Audits for 4 companies enhancing their productivity and revenue upto an average of 57%"
                     ]
                 },
                 {
@@ -265,7 +261,7 @@
                     period: "October 2024",
                     location: "Bengaluru, Karnataka",
                     achievements: [
-                        "Analyzed medical dataset to predict Parkinson's Disease using ML",
+                        "Analyzed medical dataset to predict various Disease using ML",
                         "Developed classification models using Python, Scikit-learn, Pandas, NumPy",
                         "Delivered detailed explanation via video and Jupyter Notebook walkthrough"
                     ]
@@ -285,14 +281,14 @@
                     ]
                 },
                 {
-                    name: "YouTube Notes Maker",
-                    description: "Automated Slide Extractor from Videos",
-                    tech: "OpenCV, pytesseract",
-                    year: "2022",
+                    name: "FinCrypt.ai",
+                    description: "Crypto based Financial Advisor",
+                    tech: "Deep Learning, Pyhton",
+                    year: "2025",
                     features: [
-                        "GUI-based Python tool for extracting unique slides",
-                        "Uses yt-dlp, SSIM, and OCR for video processing",
-                        "Tkinter interface with threaded processing"
+                        "Personal Crypto Advising Bot",
+                        "Uses Neural-net for projection of Regression based data",
+                        "Backend Based application."
                     ]
                 },
                 {
@@ -311,17 +307,17 @@
             skills: {
                 languages: ["Python", "SQL", "JavaScript", "TypeScript", "Java", "C"],
                 frameworks: ["Django", "React", "Node.js", "Express", "Flask", "TensorFlow"],
-                tools: ["VS Code", "Jupyter", "Google Colab", "PyCharm", "Github", "Figma"],
+                tools: ["VS Code", "Jupyter", "Google Colab", "PyCharm", "Github", "Figma","Apache"],
                 libraries: ["Matplotlib", "NumPy", "Seaborn", "Scikit-learn", "Pandas", "Bootstrap"]
             },
             achievements: [
-                "9 Time Global Hackathon Winner",
+                "10 Time Global Hackathon Winner",
                 "Co-authored 15+ Research Manuscripts",
                 "Psychology Research Proposal Accepted Internationally",
-                "Mentor @ GDG Lucknow - Mentored 450+ students in AIML",
+                "Mentor @ GDG Lucknow - Mentored 500+ students in AIML",
                 "UN International Level Essay Competition Winner",
                 "Under-19 State Level Chess Champion",
-                "Solved 500+ DSA Problems"
+                "Solved 500+ Core DSA Problems"
             ],
             certifications: [
                 "Python for Data Science",
@@ -329,7 +325,8 @@
                 "Deep Learning Fundamentals",
                 "Mastering Data Structures and Algorithm",
                 "Linear Regression",
-                "NLP and GenAI"
+                "NLP and GenAI",
+                "Full-Stack Developer"
             ]
         };
 
@@ -338,7 +335,7 @@
                 return `Available commands:
                 
 <span class="success">Basic Commands:</span>
-  help                 - Show this help message
+  help                - Show this help message
   cls / clear         - Clear the terminal
   whoami              - Display user information
   pwd                 - Print working directory
@@ -399,15 +396,15 @@
             },
             
             about: () => {
-                return `<span class="success">About ${portfolioData.personal.name}</span>
+                return `<span class="success">About ${portfolioData.personal.name} aka GoatDev(what Zeusnotfound calls him)</span>
                 
 ${portfolioData.personal.name} is an innovative and research-driven developer with a strong 
-foundation in artificial intelligence, machine learning, and full-stack development. 
+foundation in artificial intelligence, machine learning, ui/ux designer and full-stack development. 
 Recognized across numerous national and international hackathons for building impactful, 
 tech-driven solutions.
 
 <span class="info">Location:</span> ${portfolioData.personal.location}
-<span class="info">Focus Areas:</span> AI/ML, Full-Stack Development, Research
+<span class="info">Focus Areas:</span> AI/ML, Full-Stack Development, Research, UI/UX
 <span class="info">Specialties:</span> Building intelligent, user-friendly applications`;
             },
             
@@ -531,7 +528,7 @@ portfolio/
 <span class="info">Projects:</span> 3 featured projects + 40+ websites
 <span class="info">Hackathons Won:</span> 9 global competitions
 <span class="info">Research Papers:</span> 15+ manuscripts co-authored
-<span class="info">Students Mentored:</span> 450+ at GDG Lucknow
+<span class="info">Students Mentored:</span> 500+
 <span class="info">DSA Problems Solved:</span> 510+
 <span class="info">Certifications:</span> 30+ professional certifications
 <span class="info">Code Commits:</span> 1800+ (alongwith private repos)`;
@@ -562,8 +559,8 @@ portfolio/
             matrix: () => {
                 const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
                 let result = '<span style="color: #00ff00; font-family: monospace;">';
-                for (let i = 0; i < 10; i++) {
-                    for (let j = 0; j < 50; j++) {
+                for (let i = 0; i < 200; i++) {
+                    for (let j = 0; j < 450; j++) {
                         result += matrixChars[Math.floor(Math.random() * matrixChars.length)];
                     }
                     result += '\n';
@@ -574,11 +571,16 @@ portfolio/
             
             fortune: () => {
                 const quotes = [
+                    "Talk is cheap. Show me the code. – Linus Torvalds",
                     "Innovation distinguishes between a leader and a follower. - Steve Jobs",
                     "The best way to predict the future is to create it. - Peter Drucker",
                     "Code is like humor. When you have to explain it, it's bad. - Cory House",
                     "First, solve the problem. Then, write the code. - John Johnson",
                     "The only way to do great work is to love what you do. - Steve Jobs",
+                    "The only way to learn a new programming language is by writing programs in it. – Dennis Ritchie",
+                    "You can create art and beauty on a computer. – Steve Jobs",
+                    "Good programmers use their brains, but good guidelines save us having to think out every case. – Francis Glassborow",
+                    "The hackers of today are the wizards of the future. – Eric S. Raymond",
                     "Machine learning is the last invention humanity will ever need to make. - Nick Bostrom"
                 ];
                 return `<span class="info">${quotes[Math.floor(Math.random() * quotes.length)]}</span>`;
