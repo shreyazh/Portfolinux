@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolinux - Shreyash Srivastva</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0c0c0c;
+            color: #00ff00;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .terminal {
+            height: 100vh;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(45deg, #0c0c0c 0%, #1a1a1a 100%);
+        }
+        
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .terminal::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        .terminal::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 4px;
+        }
+        
+        .header {
+            color: #00ffff;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .prompt {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .user {
+            color: #ffff00;
+        }
+        
+        .host {
+            color: #ff00ff;
+        }
+        
+        .path {
+            color: #00ffff;
+        }
+        
+        .command {
+            color: #ffffff;
+        }
+        
+        .output {
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        
+        .error {
+            color: #ff4444;
+        }
+        
+        .success {
+            color: #44ff44;
+        }
+        
+        .info {
+            color: #4444ff;
+        }
+        
+        .warning {
+            color: #ffaa00;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+            flex: 1;
+            margin-left: 5px;
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+            background: #00ff00;
+            width: 8px;
+            height: 16px;
+            margin-left: 2px;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .file-list {
+            color: #00ff00;
+        }
+        
+        .directory {
+            color: #4444ff;
+            font-weight: bold;
+        }
+        
+        .executable {
+            color: #44ff44;
+            font-weight: bold;
+        }
+        
+        .ascii-art {
+            color: #00ffff;
+            font-size: 12px;
+            line-height: 1.2;
+            text-shadow: 0 0 8px #00ffff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .table th,
+        .table td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .table th {
+            color: #ffff00;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 2px 4px;
+        }
+        
+        .progress-bar {
+            background: #333;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #00ff00, #00ffff);
+            height: 100%;
+            transition: width 2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal">
+        <div class="header">
+            <div class="ascii-art">
+ ____   ___  ____ _____ _____ ___  _     ___ _   _ _   ___  __
+|  _ \ / _ \|  _ \_   _|  ___/ _ \| |   |_ _| \ | | | | \ \/ /
+| |_) | | | | |_) || | | |_ | | | | |    | ||  \| | | | |\  / 
+|  __/| |_| |  _ < | | |  _|| |_| | |___ | || |\  | |_| |/  \ 
+|_|    \___/|_| \_\|_| |_|   \___/|_____|___|_| \_|\___//_/\_\
+                                                             
+            </div>
+            <div style="margin-top: 20px;">
+                Welcome to Portfolinux v2.0 - Shreyash Srivastva's Interactive Terminal Portfolio
+                <br>Type '<span class="highlight">help</span>' to see available commands
+                <br>Last login: Sun Jun 15 15:30:22 2025 from portfolio.shreyashsrivastva.dev
+            </div>
+        </div>
+        
+        <div id="output"></div>
+        
+        <div class="input-line">
+            <span class="prompt">
+                <span class="user">shreyash</span>@<span class="host">portfolinux</span>:<span class="path">~</span>$ 
+            </span>
+            <input type="text" class="input" id="commandInput" autocomplete="off" spellcheck="false">
+            <div class="cursor"></div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const output = document.getElementById('output');
+        const input = document.getElementById('commandInput');
+        
+        // Portfolio data from the resume
+        const portfolioData = {
+            personal: {
+                name: "Shreyash Srivastva",
+                location: "Lucknow, Uttar Pradesh",
+                phone: "+918765906865",
+                email: "shreyash5183@gmail.com",
+                linkedin: "https://linkedin.com/in/shreyash-srivastva",
+                github: "https://github.com/shreyashsrivastva"
+            },
+            education: [
+                {
+                    institution: "Dr. A.P.J. Abdul Kalam Technical University, Lucknow",
+                    degree: "B.Tech - Computer Science and Engineering",
+                    period: "2022 – 2026",
+                    cgpa: "7.77 / 10"
+                },
+                {
+                    institution: "RLB Memorial School (CBSE Board)",
+                    degree: "Senior Secondary (12th Grade)",
+                    period: "2020 – 2022",
+                    percentage: "80%"
+                },
+                {
+                    institution: "DAV Public School (CBSE Board)",
+                    degree: "Secondary (10th Grade)",
+                    period: "2018 – 2020",
+                    percentage: "90%"
+                }
+            ],
+            experience: [
+                {
+                    title: "Professional Freelancer",
+                    role: "Full-Stack Developer, Designer & Digital Consultant",
+                    period: "Feb 2021 – Present",
+                    location: "India · Hybrid",
+                    achievements: [
+                        "Built 10+ responsive websites using JavaScript, TypeScript, React, and TailwindCSS",
+                        "Boosted online visibility by 45% through SEO strategies and social media branding",
+                        "Provided digital mentorship to college students via 'Thoda Guide Karde Bhai'"
+                    ]
+                },
+                {
+                    title: "Intern at iNeuron.ai",
+                    role: "Machine Learning Intern",
+                    period: "October 2024",
+                    location: "Bengaluru, Karnataka",
+                    achievements: [
+                        "Analyzed medical dataset to predict Parkinson's Disease using ML",
+                        "Developed classification models using Python, Scikit-learn, Pandas, NumPy",
+                        "Delivered detailed explanation via video and Jupyter Notebook walkthrough"
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    name: "Tutor.ai",
+                    description: "AI Learning App for Neurodivergent Students",
+                    tech: "React Native, GPT-4, NLP",
+                    year: "2025",
+                    features: [
+                        "Real-time lecture transcription with OpenAI Whisper",
+                        "GPT-4 NLP pipelines for dyslexia-friendly content",
+                        "Vision API + OCR for whiteboard recognition",
+                        "Improved comprehension by 35% with 90%+ accessibility approval"
+                    ]
+                },
+                {
+                    name: "YouTube Notes Maker",
+                    description: "Automated Slide Extractor from Videos",
+                    tech: "OpenCV, pytesseract",
+                    year: "2022",
+                    features: [
+                        "GUI-based Python tool for extracting unique slides",
+                        "Uses yt-dlp, SSIM, and OCR for video processing",
+                        "Tkinter interface with threaded processing"
+                    ]
+                },
+                {
+                    name: "QuantX",
+                    description: "Quantum Circuit Calculator",
+                    tech: "React, Next.js, TailwindCSS",
+                    year: "2024",
+                    features: [
+                        "Interactive quantum circuit simulator",
+                        "Supports multiple quantum gates (Hadamard, Pauli-X/Y/Z)",
+                        "Visualizes quantum states and outputs",
+                        "4-5 different user modules with varied functionalities"
+                    ]
+                }
+            ],
+            skills: {
+                languages: ["Python", "SQL", "JavaScript", "TypeScript", "Java", "C"],
+                frameworks: ["Django", "React", "Node.js", "Express", "Flask", "TensorFlow"],
+                tools: ["VS Code", "Jupyter", "Google Colab", "PyCharm", "Github", "Figma"],
+                libraries: ["Matplotlib", "NumPy", "Seaborn", "Scikit-learn", "Pandas", "Bootstrap"]
+            },
+            achievements: [
+                "9 Time Global Hackathon Winner",
+                "Co-authored 15+ Research Manuscripts",
+                "Psychology Research Proposal Accepted Internationally",
+                "Mentor @ GDG Lucknow - Mentored 450+ students in AIML",
+                "UN International Level Essay Competition Winner",
+                "Under-19 State Level Chess Champion",
+                "Solved 500+ DSA Problems"
+            ],
+            certifications: [
+                "Python for Data Science",
+                "Machine Learning Specialization",
+                "Deep Learning Fundamentals",
+                "Mastering Data Structures and Algorithm",
+                "Linear Regression",
+                "NLP and GenAI"
+            ]
+        };
+
+        const commands = {
+            help: () => {
+                return `Available commands:
+                
+<span class="success">Basic Commands:</span>
+  help                 - Show this help message
+  cls / clear         - Clear the terminal
+  whoami              - Display user information
+  pwd                 - Print working directory
+  ls                  - List directory contents
+  
+<span class="success">Portfolio Commands:</span>
+  about               - Display personal information
+  education           - Show educational background
+  experience          - Display work experience
+  projects            - List all projects
+  skills              - Show technical skills
+  achievements        - Display achievements and awards
+  certifications      - List certifications
+  contact             - Show contact information
+  
+<span class="success">Detailed Commands:</span>
+  cat <file>          - Display file contents (e.g., cat resume.txt)
+  grep <term>         - Search for term across portfolio
+  tree                - Display portfolio structure
+  stat                - Show portfolio statistics
+  neofetch            - System information in style
+  
+<span class="success">Fun Commands:</span>
+  matrix              - Enter the matrix
+  fortune             - Get a random quote
+  cowsay <message>    - Make a cow say something
+  
+<span class="info">Tip:</span> Use Tab for autocomplete and Up/Down arrows for command history`;
+            },
+            
+            clear: () => {
+                output.innerHTML = '';
+                return '';
+            },
+            
+            cls: () => {
+                output.innerHTML = '';
+                return '';
+            },
+            
+            whoami: () => {
+                return `<span class="success">${portfolioData.personal.name}</span>\nFull-Stack Developer & AI Enthusiast`;
+            },
+            
+            pwd: () => {
+                return '/home/shreyash/portfolio';
+            },
+            
+            ls: () => {
+                return `<span class="directory">education/</span>
+<span class="directory">experience/</span>
+<span class="directory">projects/</span>
+<span class="directory">skills/</span>
+<span class="file-list">resume.txt</span>
+<span class="file-list">contact.txt</span>
+<span class="file-list">achievements.txt</span>
+<span class="executable">portfolio.sh</span>`;
+            },
+            
+            about: () => {
+                return `<span class="success">About ${portfolioData.personal.name}</span>
+                
+${portfolioData.personal.name} is an innovative and research-driven developer with a strong 
+foundation in artificial intelligence, machine learning, and full-stack development. 
+Recognized across numerous national and international hackathons for building impactful, 
+tech-driven solutions.
+
+<span class="info">Location:</span> ${portfolioData.personal.location}
+<span class="info">Focus Areas:</span> AI/ML, Full-Stack Development, Research
+<span class="info">Specialties:</span> Building intelligent, user-friendly applications`;
+            },
+            
+            education: () => {
+                let result = '<span class="success">Educational Background</span>\n\n';
+                portfolioData.education.forEach((edu, index) => {
+                    result += `<span class="info">${index + 1}. ${edu.institution}</span>
+   ${edu.degree}
+   Period: ${edu.period}
+   ${edu.cgpa ? `CGPA: ${edu.cgpa}` : `Percentage: ${edu.percentage}`}
+   
+`;
+                });
+                return result.trim();
+            },
+            
+            experience: () => {
+                let result = '<span class="success">Work Experience</span>\n\n';
+                portfolioData.experience.forEach((exp, index) => {
+                    result += `<span class="info">${index + 1}. ${exp.title}</span>
+   Role: ${exp.role}
+   Period: ${exp.period}
+   Location: ${exp.location}
+   
+   Key Achievements:
+`;
+                    exp.achievements.forEach(achievement => {
+                        result += `   • ${achievement}\n`;
+                    });
+                    result += '\n';
+                });
+                return result.trim();
+            },
+            
+            projects: () => {
+                let result = '<span class="success">Featured Projects</span>\n\n';
+                portfolioData.projects.forEach((project, index) => {
+                    result += `<span class="info">${index + 1}. ${project.name} (${project.year})</span>
+   ${project.description}
+   Tech Stack: ${project.tech}
+   
+   Features:
+`;
+                    project.features.forEach(feature => {
+                        result += `   • ${feature}\n`;
+                    });
+                    result += '\n';
+                });
+                return result.trim();
+            },
+            
+            skills: () => {
+                return `<span class="success">Technical Skills</span>
+
+<span class="info">Programming Languages:</span>
+${portfolioData.skills.languages.join(' • ')}
+
+<span class="info">Frameworks & Technologies:</span>
+${portfolioData.skills.frameworks.join(' • ')}
+
+<span class="info">Developer Tools:</span>
+${portfolioData.skills.tools.join(' • ')}
+
+<span class="info">Libraries:</span>
+${portfolioData.skills.libraries.join(' • ')}`;
+            },
+            
+            achievements: () => {
+                let result = '<span class="success">Achievements & Awards</span>\n\n';
+                portfolioData.achievements.forEach((achievement, index) => {
+                    result += `<span class="info">${index + 1}.</span> ${achievement}\n`;
+                });
+                return result.trim();
+            },
+            
+            certifications: () => {
+                let result = '<span class="success">Certifications</span>\n\n';
+                portfolioData.certifications.forEach((cert, index) => {
+                    result += `<span class="info">${index + 1}.</span> ${cert}\n`;
+                });
+                return result.trim();
+            },
+            
+            contact: () => {
+                return `<span class="success">Contact Information</span>
+
+<span class="info">Email:</span> ${portfolioData.personal.email}
+<span class="info">Phone:</span> ${portfolioData.personal.phone}
+<span class="info">LinkedIn:</span> ${portfolioData.personal.linkedin}
+<span class="info">GitHub:</span> ${portfolioData.personal.github}
+<span class="info">Location:</span> ${portfolioData.personal.location}`;
+            },
+            
+            tree: () => {
+                return `<span class="success">Portfolio Structure</span>
+
+portfolio/
+├── <span class="directory">education/</span>
+│   ├── btech.txt
+│   ├── senior_secondary.txt
+│   └── secondary.txt
+├── <span class="directory">experience/</span>
+│   ├── freelancer.txt
+│   └── ineuron_intern.txt
+├── <span class="directory">projects/</span>
+│   ├── tutor_ai.txt
+│   ├── youtube_notes.txt
+│   └── quantx.txt
+├── <span class="directory">skills/</span>
+│   ├── languages.txt
+│   ├── frameworks.txt
+│   └── tools.txt
+└── <span class="file-list">README.md</span>`;
+            },
+            
+            stat: () => {
+                return `<span class="success">Portfolio Statistics</span>
+
+<span class="info">Experience:</span> 4+ years (since Feb 2021)
+<span class="info">Projects:</span> 3 featured projects + 10+ websites
+<span class="info">Hackathons Won:</span> 9 global competitions
+<span class="info">Research Papers:</span> 15+ manuscripts co-authored
+<span class="info">Students Mentored:</span> 450+ at GDG Lucknow
+<span class="info">DSA Problems Solved:</span> 500+
+<span class="info">Certifications:</span> 6 professional certifications
+<span class="info">Code Commits:</span> 1000+ (estimated)`;
+            },
+            
+            neofetch: () => {
+                return `<span class="info">                    -\`                </span>    <span class="success">shreyash@portfolinux</span>
+<span class="info">                   .o+\`               </span>    <span class="info">---------------------</span>
+<span class="info">                  \`ooo/               </span>    <span class="info">OS:</span> Portfolinux 2.0
+<span class="info">                 \`+oooo:              </span>    <span class="info">Kernel:</span> Developer-5.15.0
+<span class="info">                \`+oooooo:             </span>    <span class="info">Uptime:</span> 4 years, 2 months
+<span class="info">                -+oooooo+:            </span>    <span class="info">Packages:</span> 500+ DSA problems
+<span class="info">              \`/:-:++oooo+:           </span>    <span class="info">Shell:</span> portfolish
+<span class="info">             \`/++++/+++++++:          </span>    <span class="info">Languages:</span> Python, JavaScript, SQL
+<span class="info">            \`/++++++++++++++:         </span>    <span class="info">Frameworks:</span> React, Django, Node.js
+<span class="info">           \`/+++ooooooooooooo/\`       </span>    <span class="info">Hackathons:</span> 9 wins globally
+<span class="info">          ./ooosssso++osssssso+\`      </span>    <span class="info">Research:</span> 15+ papers
+<span class="info">         .oossssso-\`\`\`\`/ossssss+\`     </span>    <span class="info">Mentoring:</span> 450+ students
+<span class="info">        -osssssso.      :ssssssso.    </span>    <span class="info">Current Project:</span> Tutor.ai
+<span class="info">       :osssssss/        osssso+++.   </span>    <span class="info">Status:</span> Available for hire
+<span class="info">      /ossssssss/        +ssssooo/-   </span>
+<span class="info">     \`/ossssso+/:-        -:/+osssso+-  </span>
+<span class="info">    \`+sso+:-\`                 \`.-/+oso: </span>
+<span class="info">   \`++:.                           \`-/+/</span>
+<span class="info">   .\`                                 \`/</span>`;
+            },
+            
+            matrix: () => {
+                const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+                let result = '<span style="color: #00ff00; font-family: monospace;">';
+                for (let i = 0; i < 10; i++) {
+                    for (let j = 0; j < 50; j++) {
+                        result += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    }
+                    result += '\n';
+                }
+                result += '</span>\n<span class="info">Welcome to the Matrix, Neo. The portfolio is real.</span>';
+                return result;
+            },
+            
+            fortune: () => {
+                const quotes = [
+                    "Innovation distinguishes between a leader and a follower. - Steve Jobs",
+                    "The best way to predict the future is to create it. - Peter Drucker",
+                    "Code is like humor. When you have to explain it, it's bad. - Cory House",
+                    "First, solve the problem. Then, write the code. - John Johnson",
+                    "The only way to do great work is to love what you do. - Steve Jobs",
+                    "Machine learning is the last invention humanity will ever need to make. - Nick Bostrom"
+                ];
+                return `<span class="info">${quotes[Math.floor(Math.random() * quotes.length)]}</span>`;
+            }
+        };
+
+        // Command with parameters
+        const paramCommands = {
+            cat: (filename) => {
+                if (!filename) return 'cat: missing filename\nUsage: cat <filename>';
+                
+                const files = {
+                    'resume.txt': () => commands.about() + '\n\n' + commands.education() + '\n\n' + commands.experience(),
+                    'contact.txt': () => commands.contact(),
+                    'achievements.txt': () => commands.achievements(),
+                    'projects.txt': () => commands.projects(),
+                    'skills.txt': () => commands.skills(),
+                    'education.txt': () => commands.education(),
+                    'experience.txt': () => commands.experience(),
+                    'certifications.txt': () => commands.certifications()
+                };
+                
+                return files[filename] ? files[filename]() : `<span class="error">cat: ${filename}: No such file or directory</span>\n\nAvailable files: ${Object.keys(files).join(', ')}`;
+            },
+            
+            grep: (term) => {
+                if (!term) return '<span class="error">grep: missing search term</span>\nUsage: grep <search_term>';
+                
+                let results = [];
+                const searchData = {
+                    'Personal Info': portfolioData.personal.name + ' ' + portfolioData.personal.email + ' ' + portfolioData.personal.location,
+                    'Education': portfolioData.education.map(e => `${e.institution} ${e.degree} ${e.period}`).join(' '),
+                    'Experience': portfolioData.experience.map(e => `${e.title} ${e.role} ${e.achievements.join(' ')}`).join(' '),
+                    'Projects': portfolioData.projects.map(p => `${p.name} ${p.description} ${p.tech} ${p.features.join(' ')}`).join(' '),
+                    'Skills': `${portfolioData.skills.languages.join(' ')} ${portfolioData.skills.frameworks.join(' ')} ${portfolioData.skills.tools.join(' ')}`,
+                    'Achievements': portfolioData.achievements.join(' '),
+                    'Certifications': portfolioData.certifications.join(' ')
+                };
+                
+                Object.entries(searchData).forEach(([section, content]) => {
+                    if (content.toLowerCase().includes(term.toLowerCase())) {
+                        const lines = content.split(/[.!?]+/).filter(line => line.trim());
+                        lines.forEach(line => {
+                            if (line.toLowerCase().includes(term.toLowerCase())) {
+                                const highlighted = line.replace(new RegExp(`(${term})`, 'gi'), '<span class="highlight">$1</span>');
+                                results.push(`<span class="info">[${section}]</span> ${highlighted.trim()}`);
+                            }
+                        });
+                    }
+                });
+                
+                return results.length > 0 ? 
+                    `<span class="success">Found ${results.length} matches for '${term}':</span>\n\n${results.join('\n')}` : 
+                    `<span class="warning">grep: no matches found for '${term}'</span>`;
+            },
+            
+            cowsay: (message) => {
+                if (!message) message = "Moo! Check out my portfolio!";
+                const msgLength = message.length;
+                return `
+ ${'_'.repeat(msgLength + 2)}
+< ${message} >
+ ${'-'.repeat(msgLength + 2)}
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`;
+            }
+        };
+
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        function addOutput(content, className = '') {
+            const div = document.createElement('div');
+            div.className = `output ${className}`;
+            div.innerHTML = content;
+            output.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function executeCommand(cmd) {
+            const parts = cmd.trim().split(' ');
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            // Add command to history
+            if (cmd.trim() && (commandHistory.length === 0 || commandHistory[commandHistory.length - 1] !== cmd.trim())) {
+                commandHistory.push(cmd.trim());
+            }
+            historyIndex = commandHistory.length;
+
+            // Display the command
+            addOutput(`<span class="prompt"><span class="user">shreyash</span>@<span class="host">portfolinux</span>:<span class="path">~</span>$ </span><span class="command">${cmd}</span>`);
+
+            // Execute the command
+            if (commands[command]) {
+                const result = commands[command]();
+                if (result) addOutput(result);
+            } else if (paramCommands[command]) {
+                const result = paramCommands[command](args.join(' '));
+                addOutput(result);
+            } else if (command === '') {
+                // Empty command, do nothing
+            } else {
+                addOutput(`bash: ${command}: command not found\nType 'help' for available commands`, 'error');
+            }
+        }
+
+        // Handle input
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = input.value;
+                executeCommand(command);
+                input.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    input.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    input.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    input.value = '';
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const partial = input.value.toLowerCase();
+                const allCommands = {...commands, ...paramCommands};
+                const matches = Object.keys(allCommands).filter(cmd => cmd.startsWith(partial));
+                if (matches.length === 1) {
+                    input.value = matches[0];
+                } else if (matches.length > 1) {
+                    addOutput(`<span class="prompt"><span class="user">shreyash</span>@<span class="host">portfolinux</span>:<span class="path">~</span>$ </span><span class="command">${input.value}</span>`);
+                    addOutput(matches.join('  '), 'info');
+                }
+            }
+        });
+
+        // Focus input on click
+        terminal.addEventListener('click', () => {
+            input.focus();
+        });
+
+        // Initial focus
+        input.focus();
+
+        // Welcome message
+        setTimeout(() => {
+            addOutput('<span class="success">System initialized successfully!</span>');
+            addOutput('<span class="info">Type "help" to explore available commands or "about" to learn more about me.</span>');
+        }, 1000);
+    </script>
+</body>
+</html>
